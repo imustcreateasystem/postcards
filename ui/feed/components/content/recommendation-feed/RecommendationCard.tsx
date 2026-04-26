@@ -94,14 +94,14 @@ export default function RecommendationCard({
 
         <Queue itemsCenter justifyBetween>
           <Queue itemsCenter gap={1}>
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={handleLike}
               className={cn(
-                "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm",
-                "transition-all duration-150 active:scale-[0.95]",
                 rec.liked
-                  ? "bg-rose-50 text-rose-500 hover:bg-rose-100"
-                  : "text-stone-500 hover:bg-rose-50 hover:text-rose-500",
+                  ? "bg-rose-50 text-rose-500 hover:bg-rose-100 hover:text-rose-600"
+                  : "text-rose-500 hover:bg-rose-50 hover:text-rose-500",
               )}
               aria-label={`${rec.liked ? "Unlike" : "Like"} — ${rec.likes} likes`}
             >
@@ -113,14 +113,14 @@ export default function RecommendationCard({
                 )}
                 fill={rec.liked ? "currentColor" : "none"}
               />
-              <span className="font-medium">{rec.likes}</span>
-            </button>
+              <span>{rec.likes}</span>
+            </Button>
 
-            <button
+            <Button
+              variant="ghost"
+              size="sm"
               onClick={onSave}
               className={cn(
-                "flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm",
-                "transition-all duration-150 active:scale-[0.95]",
                 rec.saved
                   ? "bg-stone-100 text-stone-700 hover:bg-stone-200"
                   : "text-stone-500 hover:bg-stone-100 hover:text-stone-700",
@@ -128,10 +128,8 @@ export default function RecommendationCard({
               aria-label={rec.saved ? "Unsave" : "Save"}
             >
               <Bookmark size={15} fill={rec.saved ? "currentColor" : "none"} />
-              <span className="text-xs font-medium">
-                {rec.saved ? "Saved" : "Save"}
-              </span>
-            </button>
+              <span>{rec.saved ? "Saved" : "Save"}</span>
+            </Button>
 
             <Button
               variant="ghost"
