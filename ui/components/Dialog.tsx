@@ -55,7 +55,7 @@ const DialogContent = forwardRef<
       <DialogPrimitive.Close
         className={cn(
           "absolute right-4 top-4 rounded-full p-1",
-          "text-stone-400 hover:bg-stone-100 hover:text-stone-600",
+          "text-stone-500 hover:bg-stone-100 hover:text-stone-600",
           "opacity-70 transition-all duration-200 focus:outline-none disabled:pointer-events-none",
         )}
       >
@@ -110,7 +110,7 @@ const DialogDescription = forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-stone-400", className)}
+    className={cn("text-sm text-stone-500", className)}
     {...props}
   />
 ));

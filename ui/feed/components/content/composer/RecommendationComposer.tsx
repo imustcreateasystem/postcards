@@ -99,7 +99,7 @@ export default function RecommendationComposer({
                     "text-xs font-medium transition-all duration-150",
                     category === id
                       ? "bg-stone-800 text-stone-50"
-                      : "border border-stone-200 bg-white text-stone-500 hover:border-stone-400 hover:text-stone-800",
+                      : "border border-stone-200 bg-white text-stone-500 hover:border-stone-500 hover:text-stone-800",
                   )}
                 >
                   <Icon size={11} />
@@ -125,7 +125,7 @@ export default function RecommendationComposer({
                 className={cn(
                   "w-full rounded-lg border border-stone-200 px-3 py-2",
                   "text-sm text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-400 focus:outline-none",
+                  "focus:border-stone-500 focus:outline-none",
                 )}
               />
             </Stack>
@@ -146,7 +146,7 @@ export default function RecommendationComposer({
                 className={cn(
                   "w-full rounded-lg border border-stone-200 px-3 py-2",
                   "text-sm text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-400 focus:outline-none",
+                  "focus:border-stone-500 focus:outline-none",
                 )}
               />
             </Stack>
@@ -165,7 +165,7 @@ export default function RecommendationComposer({
                     wordCount > MAX_WORDS
                       ? "text-red-500"
                       : wordCount >= MIN_WORDS
-                        ? "text-stone-400"
+                        ? "text-stone-500"
                         : "text-stone-300",
                   )}
                 >
@@ -181,7 +181,7 @@ export default function RecommendationComposer({
                 className={cn(
                   "w-full resize-none rounded-lg border border-stone-200 px-3 py-2",
                   "text-sm leading-relaxed text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-400 focus:outline-none",
+                  "focus:border-stone-500 focus:outline-none",
                 )}
               />
             </Stack>
@@ -203,7 +203,7 @@ export default function RecommendationComposer({
                 className={cn(
                   "w-full rounded-lg border border-stone-200 px-3 py-2",
                   "text-sm text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-400 focus:outline-none",
+                  "focus:border-stone-500 focus:outline-none",
                 )}
               />
             </Stack>
