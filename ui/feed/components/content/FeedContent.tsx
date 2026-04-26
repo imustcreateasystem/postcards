@@ -2,10 +2,7 @@ import { Queue, Stack } from "@/ui/components/Container";
 import FeedFilters from "./filters/FeedFilters";
 import RecommendationFeed from "./recommendation-feed/RecommendationFeed";
 import WeeklyPostButton from "./weekly-post-button/WeeklyPostButton";
-
-function SuggestedCurators() {
-  return <div>SuggestedCurators</div>;
-}
+import SuggestedCurators from "./suggested-curators/SuggestedCurators";
 
 function MainColumn() {
   return (
