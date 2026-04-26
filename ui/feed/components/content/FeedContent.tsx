@@ -1,8 +1,6 @@
 import { Queue, Stack } from "@/ui/components/Container";
+import FeedFilters from "./filters/FeedFilters";
 
-function FeedFilters() {
-  return <div>FeedFilters</div>;
-}
 function RecommendationFeed() {
   return <div>RecommendationFeed</div>;
 }

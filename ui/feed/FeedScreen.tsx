@@ -1,6 +1,6 @@
 import { Stack } from "../components/Container";
-import FeedContent from "./components/FeedContent";
-import FeedTopBar from "./components/FeedTopBar";
+import FeedContent from "./components/content/FeedContent";
+import FeedTopBar from "./components/top-bar/FeedTopBar";
 
 export default function FeedScreen() {
   return (
