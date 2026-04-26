@@ -9,11 +9,11 @@ import { Button } from "@/ui/components/Button";
 import type { Recommendation } from "./RecommendationFeed";
 import Link from "next/link";
 
-interface RecommendationCardProps {
+type RecommendationCardProps = {
   rec: Recommendation;
   onLike: () => void;
   onSave: () => void;
-}
+};
 
 export default function RecommendationCard({
   rec,
@@ -55,10 +55,10 @@ export default function RecommendationCard({
                 <span className="text-sm font-semibold text-stone-800">
                   {rec.user.name}
                 </span>
-                <span className="text-xs text-stone-400">{rec.postedAt}</span>
+                <span className="text-xs text-stone-500">{rec.postedAt}</span>
               </Queue>
               <Queue itemsCenter gap={1} className="mt-0.5">
-                <span className="mr-1 text-xs text-stone-400">
+                <span className="mr-1 text-xs text-stone-500">
                   {rec.totalSlots}/5 this week
                 </span>
                 {Array.from({ length: 5 }, (_, i) => (
@@ -84,7 +84,7 @@ export default function RecommendationCard({
             {rec.title}
           </h3>
           {rec.subtitle && (
-            <p className="mt-0.5 text-sm text-stone-400">{rec.subtitle}</p>
+            <p className="mt-0.5 text-sm text-stone-500">{rec.subtitle}</p>
           )}
         </Stack>
 
@@ -101,7 +101,7 @@ export default function RecommendationCard({
                 "transition-all duration-150 active:scale-[0.95]",
                 rec.liked
                   ? "bg-rose-50 text-rose-500 hover:bg-rose-100"
-                  : "text-stone-400 hover:bg-rose-50 hover:text-rose-500",
+                  : "text-stone-500 hover:bg-rose-50 hover:text-rose-500",
               )}
               aria-label={`${rec.liked ? "Unlike" : "Like"} — ${rec.likes} likes`}
             >
@@ -123,7 +123,7 @@ export default function RecommendationCard({
                 "transition-all duration-150 active:scale-[0.95]",
                 rec.saved
                   ? "bg-stone-100 text-stone-700 hover:bg-stone-200"
-                  : "text-stone-400 hover:bg-stone-100 hover:text-stone-700",
+                  : "text-stone-500 hover:bg-stone-100 hover:text-stone-700",
               )}
               aria-label={rec.saved ? "Unsave" : "Save"}
             >

@@ -1,10 +1,8 @@
 import { Queue, Stack } from "@/ui/components/Container";
 import FeedFilters from "./filters/FeedFilters";
 import RecommendationFeed from "./recommendation-feed/RecommendationFeed";
+import WeeklyPostButton from "./weekly-post-button/WeeklyPostButton";
 
-function WeeklyPostCTA() {
-  return <div>WeeklyPostCTA</div>;
-}
 function SuggestedCurators() {
   return <div>SuggestedCurators</div>;
 }
@@ -21,7 +19,7 @@ function MainColumn() {
 function Sidebar() {
   return (
     <Stack as="aside" gap={6} className="hidden lg:flex w-72 xl:w-80 shrink-0">
-      <WeeklyPostCTA />
+      <WeeklyPostButton />
       <SuggestedCurators />
     </Stack>
   );
