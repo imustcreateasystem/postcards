@@ -4,6 +4,7 @@ import { APP_DESCRIPTION, APP_NAME } from "@/lib/constants/brand";
 import { ReactNode } from "react";
 import { sansSerifFont } from "@/ui/styles/fonts/fonts";
 import { cn } from "@/ui/utils/cn";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: APP_NAME,
@@ -20,7 +21,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
       lang="en"
       className={cn(sansSerifFont.variable, "h-full antialiased")}
     >
-      <body className="min-h-full">{children}</body>
+      <body className="min-h-full">
+        {children}
+        <Toaster />
+      </body>
     </html>
   );
 }

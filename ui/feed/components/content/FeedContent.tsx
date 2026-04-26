@@ -1,9 +1,7 @@
 import { Queue, Stack } from "@/ui/components/Container";
 import FeedFilters from "./filters/FeedFilters";
+import RecommendationFeed from "./recommendation-feed/RecommendationFeed";
 
-function RecommendationFeed() {
-  return <div>RecommendationFeed</div>;
-}
 function WeeklyPostCTA() {
   return <div>WeeklyPostCTA</div>;
 }
