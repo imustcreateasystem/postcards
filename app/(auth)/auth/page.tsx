@@ -1,10 +1,5 @@
-import { Stack } from "@/ui/components/Container";
-import { Input } from "@/ui/components/Input";
+import AuthScreen from "@/ui/auth/AuthScreen";
 
 export default function AuthPage() {
-  return (
-    <Stack center>
-      <Input />
-    </Stack>
-  );
+  return <AuthScreen />;
 }
