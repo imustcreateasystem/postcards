@@ -16,6 +16,8 @@ import { toast } from "sonner";
 import { cn } from "@/ui/utils/cn";
 import { Queue, Stack } from "@/ui/components/Container";
 import { Button } from "@/ui/components/Button";
+import { Input } from "@/ui/components/Input";
+import { Label } from "@/ui/components/Label";
 import {
   Dialog,
   DialogContent,
@@ -44,12 +46,6 @@ const MAX_WORDS = 150;
 function countWords(text: string) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
-
-const inputClass = cn(
-  "w-full rounded-lg border border-stone-200 px-3 py-2",
-  "text-sm text-stone-800 placeholder:text-stone-300",
-  "focus:border-stone-500 focus:outline-none",
-);
 
 type RecommendationComposerProps = {
   open: boolean;
@@ -122,19 +118,21 @@ export default function RecommendationComposer({
         </DialogHeader>
 
         <Stack gap={4}>
+          {/* Category picker */}
           <Stack gap={1.5}>
-            <span className="text-xs font-medium text-stone-500">Category</span>
+            <Label>Category</Label>
             <Queue gap={1.5} wrap>
               {CATEGORIES.map(({ id, label, icon: Icon }) => (
                 <button
                   key={id}
+                  type="button"
                   onClick={() => setCategory(id)}
                   className={cn(
-                    "flex items-center gap-1.5 rounded-full px-3 py-1.5",
-                    "text-xs font-medium transition-all duration-150",
+                    "flex items-center gap-1.5 rounded px-3 py-1.5",
+                    "text-xs font-medium border",
                     category === id
-                      ? "bg-stone-800 text-stone-50"
-                      : "border border-stone-200 bg-white text-stone-500 hover:border-stone-500 hover:text-stone-800",
+                      ? "border-stone-600 bg-stone-600 text-stone-50"
+                      : "border-stone-300 bg-stone-50 text-stone-500 hover:border-stone-400 hover:text-stone-700",
                   )}
                 >
                   <Icon size={11} />
@@ -144,53 +142,41 @@ export default function RecommendationComposer({
             </Queue>
           </Stack>
 
+          {/* Fields */}
           <Stack gap={3}>
             <Stack gap={1.5}>
-              <label
-                className="text-xs font-medium text-stone-500"
-                htmlFor="rec-title"
-              >
-                Title
-              </label>
-              <input
+              <Label htmlFor="rec-title">Title</Label>
+              <Input
                 id="rec-title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="What are you recommending?"
-                className={inputClass}
+                grow
               />
             </Stack>
 
             <Stack gap={1.5}>
-              <label
-                className="text-xs font-medium text-stone-500"
-                htmlFor="rec-subtitle"
-              >
+              <Label htmlFor="rec-subtitle">
                 Subtitle{" "}
-                <span className="font-normal text-stone-300">(optional)</span>
-              </label>
-              <input
+                <span className="font-normal text-stone-400">(optional)</span>
+              </Label>
+              <Input
                 id="rec-subtitle"
                 value={subtitle}
                 onChange={(e) => setSubtitle(e.target.value)}
                 placeholder="Author, year, location…"
-                className={inputClass}
+                grow
               />
             </Stack>
 
             <Stack gap={1.5}>
               <Queue itemsCenter justifyBetween>
-                <label
-                  className="text-xs font-medium text-stone-500"
-                  htmlFor="rec-note"
-                >
-                  Your note
-                </label>
+                <Label htmlFor="rec-note">Your note</Label>
                 <span
                   className={cn(
                     "text-xs tabular-nums",
                     wordCount > MAX_WORDS
-                      ? "text-red-500"
+                      ? "text-red-400"
                       : wordCount >= MIN_WORDS
                         ? "text-stone-500"
                         : "text-stone-300",
@@ -205,25 +191,29 @@ export default function RecommendationComposer({
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Why does this deserve someone's time?"
                 rows={5}
-                className={cn(inputClass, "resize-none leading-relaxed")}
+                className={cn(
+                  "w-full rounded px-3 py-2 resize-none leading-relaxed",
+                  "border border-stone-300 bg-stone-50",
+                  "text-sm text-stone-700 placeholder:text-stone-400",
+                  "hover:border-stone-400",
+                  "focus:border-stone-500 focus:outline-none focus:ring-1 focus:ring-stone-300",
+                  "disabled:cursor-not-allowed disabled:bg-stone-100 disabled:text-stone-400",
+                )}
               />
             </Stack>
 
             <Stack gap={1.5}>
-              <label
-                className="text-xs font-medium text-stone-500"
-                htmlFor="rec-link"
-              >
+              <Label htmlFor="rec-link">
                 Link{" "}
-                <span className="font-normal text-stone-300">(optional)</span>
-              </label>
-              <input
+                <span className="font-normal text-stone-400">(optional)</span>
+              </Label>
+              <Input
                 id="rec-link"
                 type="url"
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
                 placeholder="https://…"
-                className={inputClass}
+                grow
               />
             </Stack>
           </Stack>
