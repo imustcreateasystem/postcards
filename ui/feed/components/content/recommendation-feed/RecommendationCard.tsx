@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { cn } from "@/ui/utils/cn";
 import { Queue, Stack } from "@/ui/components/Container";
 import { Button } from "@/ui/components/Button";
-import type { Recommendation } from "./RecommendationFeed";
+import type { Recommendation } from "@/db/recommendations";
 import Link from "next/link";
 
 type RecommendationCardProps = {

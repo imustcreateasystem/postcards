@@ -24,6 +24,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/ui/components/Dialog";
+import { Recommendation } from "@/db/recommendations";
 
 const CATEGORIES = [
   { id: "cat-film", label: "Film", icon: Clapperboard },
@@ -44,14 +45,22 @@ function countWords(text: string) {
   return text.trim().split(/\s+/).filter(Boolean).length;
 }
 
+const inputClass = cn(
+  "w-full rounded-lg border border-stone-200 px-3 py-2",
+  "text-sm text-stone-800 placeholder:text-stone-300",
+  "focus:border-stone-500 focus:outline-none",
+);
+
 type RecommendationComposerProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onAdd: (rec: Recommendation) => void;
 };
 
 export default function RecommendationComposer({
   open,
   onOpenChange,
+  onAdd,
 }: RecommendationComposerProps) {
   const [category, setCategory] = useState<string | null>(null);
   const [title, setTitle] = useState("");
@@ -61,14 +70,9 @@ export default function RecommendationComposer({
 
   const wordCount = countWords(note);
   const wordsValid = wordCount >= MIN_WORDS && wordCount <= MAX_WORDS;
-  const canSubmit = category && title.trim() && wordsValid;
+  const canSubmit = category !== null && title.trim() !== "" && wordsValid;
 
-  const handleSubmit = () => {
-    // BACKEND: POST new recommendation
-    toast.success("Recommendation added.", {
-      description: `"${title}" will appear in your feed shortly.`,
-    });
-    onOpenChange(false);
+  const reset = () => {
     setCategory(null);
     setTitle("");
     setSubtitle("");
@@ -76,8 +80,39 @@ export default function RecommendationComposer({
     setLink("");
   };
 
+  const handleSubmit = () => {
+    if (!canSubmit || !category) return;
+    const categoryLabel =
+      CATEGORIES.find((c) => c.id === category)?.label ?? "";
+    onAdd({
+      id: `rec-${Date.now()}`,
+      user: { id: "user-mo", name: "Mira Okafor", initials: "MO" },
+      weekSlot: 0,
+      totalSlots: 5,
+      category: categoryLabel,
+      title,
+      subtitle,
+      note,
+      likes: 0,
+      liked: false,
+      saved: false,
+      postedAt: "just now",
+      link: link.trim() || null,
+    });
+    toast.success("Recommendation added.", {
+      description: `"${title}" is now in the feed.`,
+    });
+    onOpenChange(false);
+    reset();
+  };
+
+  const handleOpenChange = (next: boolean) => {
+    if (!next) reset();
+    onOpenChange(next);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="max-w-lg">
         <DialogHeader>
           <DialogTitle>Add a recommendation</DialogTitle>
@@ -122,11 +157,7 @@ export default function RecommendationComposer({
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="What are you recommending?"
-                className={cn(
-                  "w-full rounded-lg border border-stone-200 px-3 py-2",
-                  "text-sm text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-500 focus:outline-none",
-                )}
+                className={inputClass}
               />
             </Stack>
 
@@ -143,11 +174,7 @@ export default function RecommendationComposer({
                 value={subtitle}
                 onChange={(e) => setSubtitle(e.target.value)}
                 placeholder="Author, year, location…"
-                className={cn(
-                  "w-full rounded-lg border border-stone-200 px-3 py-2",
-                  "text-sm text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-500 focus:outline-none",
-                )}
+                className={inputClass}
               />
             </Stack>
 
@@ -157,7 +184,7 @@ export default function RecommendationComposer({
                   className="text-xs font-medium text-stone-500"
                   htmlFor="rec-note"
                 >
-                  Your note (between 25 - 100 words)
+                  Your note
                 </label>
                 <span
                   className={cn(
@@ -178,11 +205,7 @@ export default function RecommendationComposer({
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Why does this deserve someone's time?"
                 rows={5}
-                className={cn(
-                  "w-full resize-none rounded-lg border border-stone-200 px-3 py-2",
-                  "text-sm leading-relaxed text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-500 focus:outline-none",
-                )}
+                className={cn(inputClass, "resize-none leading-relaxed")}
               />
             </Stack>
 
@@ -200,18 +223,14 @@ export default function RecommendationComposer({
                 value={link}
                 onChange={(e) => setLink(e.target.value)}
                 placeholder="https://…"
-                className={cn(
-                  "w-full rounded-lg border border-stone-200 px-3 py-2",
-                  "text-sm text-stone-800 placeholder:text-stone-300",
-                  "focus:border-stone-500 focus:outline-none",
-                )}
+                className={inputClass}
               />
             </Stack>
           </Stack>
         </Stack>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => handleOpenChange(false)}>
             Cancel
           </Button>
           <Button disabled={!canSubmit} onClick={handleSubmit}>
