@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Bell, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Bell, Search, ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Queue } from "@/ui/components/Container";
 import { Button } from "@/ui/components/Button";
 import { APP_NAME } from "@/lib/constants/brand";
+import { signOut, useSession } from "@/lib/auth/client";
 
 const WEEKS = [
   { id: "week-apr21", label: "Week of Apr 21", short: "Apr 21" },
@@ -16,11 +18,8 @@ const WEEKS = [
 
 function TopbarLogo() {
   return (
-    <Link
-      href="/sign-up-login-screen"
-      className="flex shrink-0 items-center gap-2.5"
-    >
-      <span className="hidden sm:block font-display text-base font-semibold tracking-tight text-stone-800">
+    <Link href="/" className="flex shrink-0 items-center gap-2.5">
+      <span className="hidden sm:block text-base font-semibold tracking-tight text-stone-800">
         {APP_NAME}
       </span>
     </Link>
@@ -45,7 +44,6 @@ function WeekNavigator({
       >
         <ChevronLeft />
       </Button>
-
       <Queue itemsCenter gap={3} className="px-3 py-1.5">
         <div className="w-1.5 h-1.5 rounded-full bg-stone-400" />
         <span className="text-sm font-medium text-stone-700 whitespace-nowrap">
@@ -53,7 +51,6 @@ function WeekNavigator({
           <span className="sm:hidden">{WEEKS[weekIndex].short}</span>
         </span>
       </Queue>
-
       <Button
         variant="ghost"
         size="iconSmall"
@@ -68,12 +65,34 @@ function WeekNavigator({
 }
 
 function TopbarActions() {
+  const router = useRouter();
+  const { data: session, isPending } = useSession();
+  const [isSigningOut, setIsSigningOut] = useState(false);
+
+  const initials = session?.user?.name
+    ? session.user.name
+        .split(" ")
+        .map((n) => n[0])
+        .join("")
+        .slice(0, 2)
+        .toUpperCase()
+    : "??";
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+    await signOut({
+      fetchOptions: {
+        onSuccess: () => router.push("/auth"),
+      },
+    });
+    setIsSigningOut(false);
+  };
+
   return (
     <Queue itemsCenter gap={3} className="shrink-0">
       <Button variant="ghost" size="icon" aria-label="Search">
         <Search />
       </Button>
-
       <div className="relative">
         <Button
           variant="ghost"
@@ -85,12 +104,26 @@ function TopbarActions() {
         <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-stone-400 pointer-events-none" />
       </div>
 
-      <Queue
-        center
-        className="size-8 shrink-0 rounded-full bg-stone-200 text-xs font-semibold text-stone-700"
-      >
-        MO
-      </Queue>
+      {isPending ? (
+        <div className="size-8 shrink-0 rounded-full bg-stone-200 animate-pulse" />
+      ) : (
+        <button
+          onClick={handleSignOut}
+          disabled={isSigningOut}
+          aria-label="Sign out"
+          className="size-8 shrink-0 rounded-full bg-stone-200 text-xs font-semibold text-stone-700
+            flex items-center justify-center
+            hover:bg-stone-300 hover:text-stone-800
+            disabled:cursor-not-allowed disabled:opacity-50
+            transition-colors"
+        >
+          {isSigningOut ? (
+            <Loader2 className="size-3.5 animate-spin" />
+          ) : (
+            initials
+          )}
+        </button>
+      )}
     </Queue>
   );
 }

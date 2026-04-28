@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+::selection {
+  background: var(--color-stone-700);
+  color: var(--color-stone-50);
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;

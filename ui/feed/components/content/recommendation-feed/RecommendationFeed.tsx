@@ -27,7 +27,7 @@ export default function RecommendationFeed({
     <>
       <Stack gap={4}>
         <Queue itemsCenter justifyBetween>
-          <span className="text-sm text-stone-400">
+          <span className="text-sm text-stone-500">
             {recs.length} recommendation{recs.length !== 1 ? "s" : ""} this week
           </span>
           <Button size="sm" onClick={() => setComposerOpen(true)}>
@@ -37,7 +37,7 @@ export default function RecommendationFeed({
         </Queue>
 
         {recs.length === 0 ? (
-          <p className="py-12 text-center text-sm text-stone-400">
+          <p className="py-12 text-center text-sm text-stone-500">
             Nothing here yet.
           </p>
         ) : (
